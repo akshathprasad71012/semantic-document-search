@@ -81,6 +81,8 @@ def extract_text_main(path):
         print(path, " Added!")
         if not text:
             text = extract_ocr(path)
+        else:
+            text = text + ' \n' + extract_ocr(path)
     elif path.lower().endswith('docx'):
         text = extract_text_docx(path)
         print(path, " Added!")
