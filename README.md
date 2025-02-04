@@ -21,10 +21,10 @@ The backend consists of a build_index.py file, which goes through all the docume
 
 Once this is done, you can launch the FastAPI backend which uses the Index to respond to queries. 
 
-**NOTE: For FastAPI backend to work, the FAISS Index should be created by running build_index.py**
+**NOTE: For FastAPI backend to work, the FAISS Index should be created first by running build_index.py**
 
 ```
-# Edit the path to the directory containing documents
+# Edit the path to the directory containing documents in build_index.py
 
 python build_index.py
 uvicorn backend:app
