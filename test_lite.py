@@ -14,22 +14,22 @@ DOCX_PARA_LIMIT = 1000
 TEXT_LIMIT = 5000
 custom_config = r'--oem 1 --psm 11'
 doc_dir = "/home/akshathprasad/Documents/Documents/Documents/"
-model = SentenceTransformer("all-mpnet-base-v2")
+model = SentenceTransformer("all-MiniLM-L6-v2")
 
-if not os.path.exists('faiss_index.bin'):
+if not os.path.exists('faiss_index_lite.bin'):
     print("Initialising new faiss index")
-    index = faiss.IndexFlatL2(768)
+    index = faiss.IndexFlatL2(384)
 else:
     print("FAISS Index Loaded")
-    index = faiss.read_index("faiss_index.bin")
+    index = faiss.read_index("faiss_index_lite.bin")
 
 
-if not os.path.exists("document_names.pkl"):
+if not os.path.exists("document_names_lite.pkl"):
     print("Document Names not found")
     document_names = []
 else:
     print("Document Names Loaded")
-    with open("document_names.pkl", 'rb') as f:
+    with open("document_names_lite.pkl", 'rb') as f:
         document_names = pickle.load(f)
 
 
@@ -108,7 +108,7 @@ for file in os.listdir(doc_dir):
     embedding = model.encode([text], normalize_embeddings=True)
     document_names.append(path)
     index.add(np.array(embedding, dtype=np.float32))
-    with open("document_names.pkl", 'wb') as f:
+    with open("document_names_lite.pkl", 'wb') as f:
         pickle.dump(document_names, f)
 
-    faiss.write_index(index, "faiss_index.bin")
+    faiss.write_index(index, "faiss_index_lite.bin")
